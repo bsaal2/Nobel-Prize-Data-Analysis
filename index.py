@@ -21,11 +21,10 @@ def main():
 
     # Creating the pandaDataFrame from the sparkDataFrame 
     pdf = createPandaDataFrame(sdf)
-    print("{0}".format(pdf.info()))
-    print("Total row count : {0}".format(pdf.shape[0]))
-    print("Total missing value count : {0}".format(pdf.isna()))
-    sex_count = pdf["Sex"].value_counts().head(10)
-    # print("{0}".format(sex_count))
+    pdf = pdf.head(100)
+    prize_count = pdf.groupby('Year')['Prize'].count()
+    prize_count.plot(kind="bar",x='Year', y='Prize', color='green')
+    plt.show()
     
     # stop the spark      
     stopSpark(spark)
